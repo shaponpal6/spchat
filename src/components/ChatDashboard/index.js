@@ -9,12 +9,12 @@ import ChatContainer from './container';
 // import ComponentsManager from './components-manager';
 import style from './style'
 
-class ChatWidget extends Component {  
+class ChatDashboard extends Component {  
 	render({ todos }, { text }) {
 		const store = this.props.store;
 	
 		return (
-			<div class={style.chatWidget}>
+			<div class={style.chatDashboard}>
 				<Header />
 				<ChatContainer
 					store={store.todos}
@@ -30,4 +30,4 @@ class ChatWidget extends Component {
 	}
 }
 
-export default ChatWidget;
+export default ChatDashboard;
