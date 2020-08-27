@@ -1,7 +1,7 @@
 import { h, Component } from "preact";
 import { connect } from "preact-redux";
-import reduce from "../store/reducers/reducers";
-import * as actions from "../store/actions/actions";
+import reduce from "../store/reducers";
+import * as actions from "../store/actions";
 // import TodoItem from "./todo-item";
 // import Header from "./chat-widget/header";
 // import Footer from "./chat-widget/footer";
@@ -45,7 +45,6 @@ class App extends Component {
 		console.log("clicked Button");
 		// this.props.addTodo(this.state.text);
 		// this.setState({ text: "" });
-		console.log()
 	};
 	// Button Hover
 	onChatButtonHover = () => {
