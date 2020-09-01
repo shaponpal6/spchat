@@ -19,6 +19,7 @@
   "license": "MIT",
   "author": "Jason Miller <jason@developit.ca>",
   "devDependencies": {
+    "css-loader": "^4.2.2",
     "eslint": "^4.5.0",
     "eslint-config-synacor": "^1.1.0",
     "if-env": "^1.0.0",
@@ -27,6 +28,11 @@
     "preact-cli": "^2.0.0"
   },
   "dependencies": {
+    "@firebase/app": "^0.6.10",
+    "@firebase/database": "^0.6.11",
+    "@firebase/firestore": "^1.16.6",
+    "firebase": "^7.19.1",
+    "firebase-admin": "^9.1.1",
     "preact": "^8.1.0",
     "preact-redux": "^1.2.0",
     "redux": "^3.6.0"

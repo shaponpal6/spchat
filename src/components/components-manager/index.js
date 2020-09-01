@@ -7,21 +7,20 @@ import { h, Component } from "preact";
 // import Footer from "../chat-widget/footer";
 // import ChatContainer from "../chat-widget/container";
 //ChatWidget
-import ChatWidget from "../chat-widget"
+import ChatWidget from "../chat-widget";
 //ChatDashboard
-import ChatDashboard from "../ChatDashboard"
+import ChatDashboard from "../ChatDashboard";
 // Button
 import ChatButton from "../chat-button";
 //ChatIntroContainer
 import ChatIntroContainer from "../ChatIntroContainer";
-import "./style";
+import style from "./style";
 
 class ComponentsManager extends Component {
 	render() {
-		console.log(this.props)
 		const store = this.props.store;
 		return (
-			<div id="app">
+			<div class={style.chatWraper}>
 				{/* <Header />
 				<ChatContainer
 					store={store.todos}
@@ -33,9 +32,9 @@ class ComponentsManager extends Component {
 					onInput={store.updateText}
 				/> */}
 				<ChatWidget store={store.chatWidget} />
-				<ChatDashboard store={store.chatDashboard} />
+				{/* <ChatDashboard store={store.chatDashboard} />
 				<ChatIntroContainer store={store.chatIntro} />
-				<ChatButton store={store.chatButton} />
+				<ChatButton store={store.chatButton} /> */}
 			</div>
 		);
 	}

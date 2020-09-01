@@ -14,8 +14,8 @@ export default class TodoItem extends Component {
 	render({ todo }) {
 		return (
 			<li>
-				<button onClick={this.remove}>×</button>
 				{ ' ' + todo.text }
+				<button onClick={this.remove}>×</button>
 			</li>
 		);
 	}

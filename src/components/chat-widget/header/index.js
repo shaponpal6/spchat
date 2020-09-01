@@ -1,12 +1,14 @@
 import { h, Component } from 'preact';
+import ActionButtons from './actionButtons';
 import style from './style.less';
 
 export default class Header extends Component {
 	render() {
-		console.log(style);
+		const store = this.props.store;
 		return (
 			<header class={style.header}>
-				<h1>Preact App</h1>
+				<h1>Chatbot App</h1>
+				<ActionButtons isLogedIn={store.isLogedIn}  onLogedIn={store.onLogedIn}  onLogedOut={store.onLogedOut}/>
 			</header>
 		);
 	}

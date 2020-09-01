@@ -2,32 +2,26 @@ import { h, Component } from "preact";
 import { connect } from "preact-redux";
 import reduce from "../store/reducers/reducers";
 import * as actions from "../store/actions/actions";
+
+// Firebase
+import firebaseEvents from '../core/firebase/firebaseEvents';
+
 // import TodoItem from "./todo-item";
 // import Header from "./chat-widget/header";
 // import Footer from "./chat-widget/footer";
 // import ChatContainer from "./chat-widget/container";
 import ComponentsManager from "./components-manager";
-import "./style";
+import style from "./style";
+
+const app = new firebaseEvents();
 
 @connect(reduce, actions)
-class App extends Component {
-	// constructor() {
-	// 	super();
-
-	// 	this.state = {
-	// 		store: [],
-	// 	};
-	// }
-
-	componentDidMount() {
-		// fetch("https://localhost:3000/api/aye")
-		// 	.then((response) => response.json())
-		// 	.then((json) => {
-		// 		this.setState({ jsonReturnedValue: json });
-		// 	});
-	}
+class AppComponent extends Component {
 
 	addTodos = () => {
+		console.log('add...', this.state);
+		console.log('event...', app);
+		app.saveMessage(this.state.text)
 		this.props.addTodo(this.state.text);
 		this.setState({ text: "" });
 	};
@@ -36,7 +30,21 @@ class App extends Component {
 		this.props.removeTodo(todo);
 	};
 
+	//onLogedIn
+	onLogedIn = () => {
+		console.log('onLogedIn');
+		app.signIn();
+	};
+
+	//onLogedOut
+	onLogedOut = () => {
+		console.log('onLogedOut');
+		app.signOut;
+	};
+
 	updateText = (e) => {
+		console.log('updateing...', e);
+	
 		this.setState({ text: e.target.value });
 	};
 
@@ -45,7 +53,7 @@ class App extends Component {
 		console.log("clicked Button");
 		// this.props.addTodo(this.state.text);
 		// this.setState({ text: "" });
-		console.log()
+		console.log();
 	};
 	// Button Hover
 	onChatButtonHover = () => {
@@ -56,10 +64,15 @@ class App extends Component {
 
 	render({ todos }, { text }) {
 		return (
-			<div id="app">
+			<div class={style.chatContainer}>
 				<ComponentsManager
 					store={{
 						chatWidget: {
+							header: {
+								isLogedIn: false,
+								onLogedIn : this.onLogedIn,
+								onLogedOut : this.onLogedOut
+							},
 							todos,
 							removeTodo: this.removeTodo,
 							text,
@@ -97,4 +110,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default AppComponent;

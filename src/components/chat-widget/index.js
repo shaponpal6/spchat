@@ -15,7 +15,7 @@ class ChatWidget extends Component {
 	
 		return (
 			<div class={style.chatWidget}>
-				<Header />
+				<Header store={store.header}/>
 				<ChatContainer
 					store={store.todos}
 					removeToDo={store.removeTodo}

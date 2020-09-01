@@ -1,12 +1,16 @@
-import { Provider } from 'preact-redux';
-import store from './store/store';
-import App from './components/app';
-import './style';
+import { Provider } from "preact-redux";
+import store from "./store/store";
+import AppComponent from "./components/app";
+import "./style";
+// import firebase from './firebase';
+//import events from './core/firebaseEvents';
+
+// console.log(firebase);
 
 export default () => (
-	<div id="outer">
+	<div class="chatWidgetEntryPoint">
 		<Provider store={store}>
-			<App />
+			<AppComponent />
 		</Provider>
 	</div>
 );
