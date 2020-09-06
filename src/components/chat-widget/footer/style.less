@@ -1,3 +1,30 @@
 .footer {
-	display: block;
+	display: flex;
+	padding: 0 8px 6px;
+	position: relative;
+	background: #f5f5f5;
+	z-index: 3;
+	border-top: 1px solid #cccccc5c;
+	box-shadow: inset 10px -10px 10px -10px #607d8b;
+}
+form {
+	background: #eee;
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+
+	input {
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		padding: 10px;
+		background: #fff;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		font-size: 130%;
+		outline: none;
+
+		&:focus {
+			border-color: #bbb;
+		}
+	}
 }

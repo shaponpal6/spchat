@@ -1,10 +1,66 @@
-import firebase from "./firebase";
+import root, { IDBOpenDBRequest } from "window-or-global";
+// import * as firebase from 'firebase/app';
+// var FirebaseContext = require("./FirebaseContext");
+// import 'firebase/firestore';
+// import firebase from "./firebase";
+var firebase = require("firebase/app");
+import "firebase/firestore";
 
-let db = firebase.database();
+const {Firestore} = require('@google-cloud/firestore');
 
-export default class firebaseEvents {
-  constructor() {} 
-  
+// Create a new client
+const firestore = new Firestore();
+
+
+
+
+
+
+const firebaseConfig = {
+	apiKey: "AIzaSyCFk8e3Zgxj1xtOUfSK5o2kVxtV5EdyWgg",
+	authDomain: "friendlychat-21b46.firebaseapp.com",
+	databaseURL: "https://friendlychat-21b46.firebaseio.com",
+	projectId: "friendlychat-21b46",
+	storageBucket: "friendlychat-21b46.appspot.com",
+	messagingSenderId: "943752361579",
+	appId: "1:943752361579:web:f0f879766cb8026d3ee32e",
+	measurementId: "G-Y4QEG4SVQE",
+};
+
+const db = !firebase.apps.length 
+  ? firebase.initializeApp(firebaseConfig).firestore()
+  : firebase.app().firestore();
+
+
+
+
+
+
+
+
+
+
+
+export const saveMessage = (messageText) => {
+	console.log(db);
+	console.log(firestore);
+	console.log(FirebaseContext);
+    FirebaseContext
+	.collection("messages")
+	.add({
+		name: this.getUserName(),
+		text: messageText,
+		profilePicUrl: this.getProfilePicUrl(),
+		timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+	})
+	.catch(function (error) {
+		console.error("Error writing new message to database", error);
+	});
+}
+
+export class firebaseEvents {
+	constructor() {}
+
 	// Signs-in Friendly Chat.
 	signIn() {
 		// Sign into Firebase using popup auth & Google as the identity provider.
@@ -43,9 +99,10 @@ export default class firebaseEvents {
 
 	// Saves a new message to your Cloud Firestore database.
 	saveMessage(messageText) {
+		console.log(firebase);
+		// console.log(firebase.firestore());
 		// Add a new message entry to the database.
 		return firebase
-			.firestore()
 			.collection("messages")
 			.add({
 				name: this.getUserName(),

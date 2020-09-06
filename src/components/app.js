@@ -4,7 +4,7 @@ import reduce from "../store/reducers/reducers";
 import * as actions from "../store/actions/actions";
 
 // Firebase
-import firebaseEvents from '../core/firebase/firebaseEvents';
+// import {saveMessage} from '../core/firebase/firebaseEvents';
 
 // import TodoItem from "./todo-item";
 // import Header from "./chat-widget/header";
@@ -13,15 +13,14 @@ import firebaseEvents from '../core/firebase/firebaseEvents';
 import ComponentsManager from "./components-manager";
 import style from "./style";
 
-const app = new firebaseEvents();
+//const app = new firebaseEvents();
 
 @connect(reduce, actions)
 class AppComponent extends Component {
-
 	addTodos = () => {
-		console.log('add...', this.state);
-		console.log('event...', app);
-		app.saveMessage(this.state.text)
+		console.log("add...", this.state);
+		// console.log('event...', app);
+		// saveMessage(this.state.text)
 		this.props.addTodo(this.state.text);
 		this.setState({ text: "" });
 	};
@@ -32,19 +31,27 @@ class AppComponent extends Component {
 
 	//onLogedIn
 	onLogedIn = () => {
-		console.log('onLogedIn');
+		console.log("onLogedIn");
 		app.signIn();
 	};
 
 	//onLogedOut
 	onLogedOut = () => {
-		console.log('onLogedOut');
+		console.log("onLogedOut");
 		app.signOut;
+	};
+	// onMenuToggle
+	onMenuToggle = () => {
+		console.log("onCloseWidget111");
+	};
+	//onCloseWidget
+	onCloseWidget = () => {
+		console.log("onCloseWidget");
 	};
 
 	updateText = (e) => {
-		console.log('updateing...', e);
-	
+		console.log("updateing...", e);
+
 		this.setState({ text: e.target.value });
 	};
 
@@ -70,14 +77,32 @@ class AppComponent extends Component {
 						chatWidget: {
 							header: {
 								isLogedIn: false,
-								onLogedIn : this.onLogedIn,
-								onLogedOut : this.onLogedOut
+								onLogedIn: this.onLogedIn,
+								onLogedOut: this.onLogedOut,
+								operators: [
+									{ name: "Shapon Pal", avater: "" },
+									{ name: "Shapon Pal2", avater: "" },
+									{ name: "Shapon Pal3", avater: "" },
+									{ name: "Shapon Pal4", avater: "" },
+								],
+								chatText: "Chat With",
+								onMenuToggle: this.onMenuToggle,
+								onCloseWidget: this.onCloseWidget,
+								
 							},
 							todos,
 							removeTodo: this.removeTodo,
 							text,
 							addTodos: this.addTodos,
 							updateText: this.updateText,
+							footer: {
+								placeholder: "Type here....",
+								onBotStatus: this.onMenuToggle,
+								onMenuExpend: this.onCloseWidget,
+								onAttachment: this.onCloseWidget,
+								onInputSubmit: this.addTodos,
+								onInputChange: this.updateText,
+							},
 						},
 						chatDashboard: {
 							todos,
