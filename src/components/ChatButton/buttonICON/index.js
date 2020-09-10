@@ -13,7 +13,7 @@ class ButtonICON extends Component {
 				buttonType={store.buttonType}
 				onHover={store.onHover}
 				onClick={store.onClick}
-			>Chat Button</button>
+			>B</button>
 		);
 	}
 }

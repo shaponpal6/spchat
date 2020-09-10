@@ -2,20 +2,15 @@ import { h, Component } from "preact";
 import { connect } from "preact-redux";
 import reduce from "../store/reducers/reducers";
 import * as actions from "../store/actions/actions";
-
-// Firebase
-// import {saveMessage} from '../core/firebase/firebaseEvents';
-
-// import TodoItem from "./todo-item";
-// import Header from "./chat-widget/header";
-// import Footer from "./chat-widget/footer";
-// import ChatContainer from "./chat-widget/container";
-import ComponentsManager from "./components-manager";
+import ChatWidget from "./chat-widget";
+import ChatDashboard from "./ChatDashboard";
+import ChatIntro from "./ChatIntro";
+import ChatButton from "./ChatButton";
 import style from "./style";
 
 //const app = new firebaseEvents();
 
-@connect(reduce, actions)
+// @connect(reduce, actions)
 class AppComponent extends Component {
 	addTodos = () => {
 		console.log("add...", this.state);
@@ -69,67 +64,99 @@ class AppComponent extends Component {
 		// this.setState({ text: "" });
 	};
 
-	render({ todos }, { text }) {
+	// state
+	state = {
+		router: "chatWidget",
+		chatButton: true,
+		chatWidget: {
+			header: {
+				isLogedIn: false,
+				onLogedIn: this.onLogedIn,
+				onLogedOut: this.onLogedOut,
+				operators: [
+					{ name: "Shapon Pal", avater: "" },
+					{ name: "Shapon Pal2", avater: "" },
+					{ name: "Shapon Pal3", avater: "" },
+					{ name: "Shapon Pal4", avater: "" },
+				],
+				chatText: "Chat With",
+				onMenuToggle: this.onMenuToggle,
+				onCloseWidget: this.onCloseWidget,
+			},
+			todos: [],
+			removeTodo: this.removeTodo,
+			text: "",
+			addTodos: this.addTodos,
+			updateText: this.updateText,
+			footer: {
+				placeholder: "Type here....",
+				onBotStatus: this.onMenuToggle,
+				onMenuExpend: this.onCloseWidget,
+				onAttachment: this.onCloseWidget,
+				onInputSubmit: this.addTodos,
+				onInputChange: this.updateText,
+			},
+		},
+		chatDashboard: {
+			header: {
+				isLogedIn: false,
+				onLogedIn: this.onLogedIn,
+				onLogedOut: this.onLogedOut,
+				operators: [
+					{ name: "Shapon Pal", avater: "" },
+					{ name: "Shapon Pal2", avater: "" },
+					{ name: "Shapon Pal3", avater: "" },
+					{ name: "Shapon Pal4", avater: "" },
+				],
+				chatText: "Chat With",
+				onMenuToggle: this.onMenuToggle,
+				onCloseWidget: this.onCloseWidget,
+			},
+			todos: [],
+			removeTodo: this.removeTodo,
+			text: "",
+			addTodos: this.addTodos,
+			updateText: this.updateText,
+			footer: {
+				placeholder: "Type here....",
+				onBotStatus: this.onMenuToggle,
+				onMenuExpend: this.onCloseWidget,
+				onAttachment: this.onCloseWidget,
+				onInputSubmit: this.addTodos,
+				onInputChange: this.updateText,
+			},
+		},
+		chatButton: {
+			onChatButtonClick: this.onChatButtonClick,
+			onChatButtonHover: this.onChatButtonHover,
+			buttonType: "chatICON",
+		},
+		chatIntro: {
+			onChatButtonClick: this.onChatButtonClick,
+			chatIntroType: "general",
+		},
+	};
+
+	render() {
+		console.log(this.state);
+		console.log(this.state.chatIntro);
 		return (
 			<div class={style.chatContainer}>
-				<ComponentsManager
-					store={{
-						chatWidget: {
-							header: {
-								isLogedIn: false,
-								onLogedIn: this.onLogedIn,
-								onLogedOut: this.onLogedOut,
-								operators: [
-									{ name: "Shapon Pal", avater: "" },
-									{ name: "Shapon Pal2", avater: "" },
-									{ name: "Shapon Pal3", avater: "" },
-									{ name: "Shapon Pal4", avater: "" },
-								],
-								chatText: "Chat With",
-								onMenuToggle: this.onMenuToggle,
-								onCloseWidget: this.onCloseWidget,
-								
-							},
-							todos,
-							removeTodo: this.removeTodo,
-							text,
-							addTodos: this.addTodos,
-							updateText: this.updateText,
-							footer: {
-								placeholder: "Type here....",
-								onBotStatus: this.onMenuToggle,
-								onMenuExpend: this.onCloseWidget,
-								onAttachment: this.onCloseWidget,
-								onInputSubmit: this.addTodos,
-								onInputChange: this.updateText,
-							},
-						},
-						chatDashboard: {
-							todos,
-							removeTodo: this.removeTodo,
-							text,
-							addTodos: this.addTodos,
-							updateText: this.updateText,
-						},
-						chatButton: {
-							onChatButtonClick: this.onChatButtonClick,
-							onChatButtonHover: this.onChatButtonHover,
-							buttonType: "chatICON",
-						},
-						chatIntro: {
-							onChatButtonClick: this.onChatButtonClick,
-							chatIntroType: "general",
-						},
-					}}
-				/>
+				{this.state.router === "chatWidget" && (
+					<ChatWidget store={this.state.chatWidget} />
+				)}
 
-				{/* <Header />
-				<ChatContainer store={todos} removeToDo={this.removeTodo} />
-				<Footer
-					value={text}
-					onSubmit={this.addTodos}
-					onInput={this.updateText}
-				/> */}
+				{this.state.router === "chatIntro" && (
+					<ChatIntro store={this.state.chatIntro} />
+				)}
+
+				{this.state.router === "chatDashboard" && (
+					<ChatDashboard store={this.state.chatDashboard} />
+				)}
+
+				{this.state.chatButton && (
+					<ChatButton store={this.state.chatButton} />
+				)}
 			</div>
 		);
 	}
