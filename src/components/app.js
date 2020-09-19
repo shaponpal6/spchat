@@ -1,21 +1,32 @@
 import { h, Component } from "preact";
 import { connect } from "preact-redux";
-import reduce from "../store/reducers/reducers";
-import * as actions from "../store/actions/actions";
+import reduce from "../store/reducers";
+import * as actions from "../store/actions";
 import ChatWidget from "./chat-widget";
 import ChatDashboard from "./ChatDashboard";
 import ChatIntro from "./ChatIntro";
 import ChatButton from "./ChatButton";
 import style from "./style";
 
-//const app = new firebaseEvents();
+function isRTL(s) {
+	const rtlChars = "\u0591-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC";
+	const rtlDirCheck = new RegExp(`^[^${rtlChars}]*?[${rtlChars}]`);
 
-// @connect(reduce, actions)
+	return rtlDirCheck.test(s);
+}
+
+@connect(reduce, actions)
 class AppComponent extends Component {
+	state = {
+		initialized: false,
+		i118n : {...this.props}
+	};
+
 	addTodos = () => {
-		console.log("add...", this.state);
+		console.log("proppp...", this.props);
+		console.log("add......", this.state);
 		// console.log('event...', app);
-		// saveMessage(this.state.text)
+		// saveMessage(this.state.text);
 		this.props.addTodo(this.state.text);
 		this.setState({ text: "" });
 	};
@@ -64,99 +75,43 @@ class AppComponent extends Component {
 		// this.setState({ text: "" });
 	};
 
-	// state
-	state = {
-		router: "chatWidget",
-		chatButton: true,
-		chatWidget: {
-			header: {
-				isLogedIn: false,
-				onLogedIn: this.onLogedIn,
-				onLogedOut: this.onLogedOut,
-				operators: [
-					{ name: "Shapon Pal", avater: "" },
-					{ name: "Shapon Pal2", avater: "" },
-					{ name: "Shapon Pal3", avater: "" },
-					{ name: "Shapon Pal4", avater: "" },
-				],
-				chatText: "Chat With",
-				onMenuToggle: this.onMenuToggle,
-				onCloseWidget: this.onCloseWidget,
-			},
-			todos: [],
+	render() {
+		console.log("props...", this.props);
+		console.log("state..", this.props);
+
+		const onEventsHandlerProps = {
+			...this.state,
+			onLogedIn: this.onLogedIn,
+			onLogedOut: this.onLogedOut,
+			onMenuToggle: this.onMenuToggle,
+			onCloseWidget: this.onCloseWidget,
 			removeTodo: this.removeTodo,
-			text: "",
 			addTodos: this.addTodos,
 			updateText: this.updateText,
-			footer: {
-				placeholder: "Type here....",
-				onBotStatus: this.onMenuToggle,
-				onMenuExpend: this.onCloseWidget,
-				onAttachment: this.onCloseWidget,
-				onInputSubmit: this.addTodos,
-				onInputChange: this.updateText,
-			},
-		},
-		chatDashboard: {
-			header: {
-				isLogedIn: false,
-				onLogedIn: this.onLogedIn,
-				onLogedOut: this.onLogedOut,
-				operators: [
-					{ name: "Shapon Pal", avater: "" },
-					{ name: "Shapon Pal2", avater: "" },
-					{ name: "Shapon Pal3", avater: "" },
-					{ name: "Shapon Pal4", avater: "" },
-				],
-				chatText: "Chat With",
-				onMenuToggle: this.onMenuToggle,
-				onCloseWidget: this.onCloseWidget,
-			},
-			todos: [],
-			removeTodo: this.removeTodo,
-			text: "",
-			addTodos: this.addTodos,
-			updateText: this.updateText,
-			footer: {
-				placeholder: "Type here....",
-				onBotStatus: this.onMenuToggle,
-				onMenuExpend: this.onCloseWidget,
-				onAttachment: this.onCloseWidget,
-				onInputSubmit: this.addTodos,
-				onInputChange: this.updateText,
-			},
-		},
-		chatButton: {
+			onBotStatus: this.onMenuToggle,
+			onMenuExpend: this.onCloseWidget,
+			onAttachment: this.onCloseWidget,
+			onInputSubmit: this.addTodos,
+			onInputChange: this.updateText,
 			onChatButtonClick: this.onChatButtonClick,
 			onChatButtonHover: this.onChatButtonHover,
-			buttonType: "chatICON",
-		},
-		chatIntro: {
-			onChatButtonClick: this.onChatButtonClick,
-			chatIntroType: "general",
-		},
-	};
+		};
 
-	render() {
-		console.log(this.state);
-		console.log(this.state.chatIntro);
 		return (
 			<div class={style.chatContainer}>
-				{this.state.router === "chatWidget" && (
-					<ChatWidget store={this.state.chatWidget} />
+				{this.props.router === "chatWidget" && (
+					<ChatWidget store={this.props.chatWidget} {...onEventsHandlerProps} />
 				)}
 
-				{this.state.router === "chatIntro" && (
-					<ChatIntro store={this.state.chatIntro} />
+				{this.props.router === "chatIntro" && (
+					<ChatIntro store={this.props.chatIntro} {...onEventsHandlerProps}/>
 				)}
 
-				{this.state.router === "chatDashboard" && (
-					<ChatDashboard store={this.state.chatDashboard} />
+				{this.props.router === "chatDashboard" && (
+					<ChatDashboard store={this.props.chatDashboard} {...onEventsHandlerProps}/>
 				)}
 
-				{this.state.chatButton && (
-					<ChatButton store={this.state.chatButton} />
-				)}
+				{this.props.chatButton && <ChatButton store={this.props.chatButton} {...onEventsHandlerProps}/>}
 			</div>
 		);
 	}

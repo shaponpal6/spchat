@@ -3,6 +3,7 @@ import { Provider } from "preact-redux";
 import store from "./store/store";
 import AppComponent from "./components/app";
 import "./style";
+
 // import firebase from './firebase';
 //import events from './core/firebaseEvents';
 
@@ -15,12 +16,10 @@ import "./style";
 // 		</Provider>
 // 	</div>
 // );
-
-
-
 class App extends Component {
-	
 	render() {
+		console.log("store", store);
+		console.log("store", store.getState());
 		return (
 			<div class="chatWidgetEntryPoint">
 				<Provider store={store}>

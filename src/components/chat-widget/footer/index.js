@@ -1,10 +1,11 @@
-import { h } from "preact";
+// import { h } from "preact";
 import style from "./style.less";
 import Button from "../../CommonContainer/ButtonComponent";
 import ninja from "../../../images/ninja.png";
 
 export default (props) => {
 	const store = props.store;
+	console.log('props footer', props);
 	return (
 		<div class={style.footer}>
 			
@@ -12,10 +13,10 @@ export default (props) => {
 			<Button className="" imageSrc={ninja}  onClick={store.onAttachment}/> 
 			<Button className="" imageSrc={ninja}  onClick={store.onMenuExpend}/> 
 
-			<form onSubmit={store.onInputSubmit} action="javascript:">
+			<form onSubmit={props.onSubmit} action="javascript:">
 				<input
 					value={props.value}
-					onInput={store.onInputChange}
+					onInput={props.onInput}
 					placeholder={store.placeholder}
 				/>
 			</form>

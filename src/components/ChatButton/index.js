@@ -5,6 +5,7 @@ import style from "./style.less";
 
 class ChatButton extends Component {
 	render() {
+		console.log('Button.....')
 		console.log(this.props)
 		const store = this.props.store;
 		return (
