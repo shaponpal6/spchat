@@ -12,9 +12,9 @@ export default class ActionButtons extends Component {
 				<ButtonComponent className={style.actionBUtton}  onClick={this.props.onMenuToggle}  imageSrc={MenuIcon}/>
 				<div class={style.actionsList}>
 					{this.props.isLogedIn ? (
-						<SignInOut text="Log Out" onClick={this.props.onLogedOut} />
+						<SignInOut text="Log Out" onClick={this.props.onSignOut} />
 					) : (
-						<SignInOut text="Log In" onClick={this.props.onLogedIn} />
+						<SignInOut text="Log In" onClick={this.props.onSignIn} />
 					)}
 				</div>
 			</div>

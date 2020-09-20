@@ -8,6 +8,7 @@ class ChatButton extends Component {
 		console.log('Button.....')
 		console.log(this.props)
 		const store = this.props.store;
+		
 		return (
 			<div class={style.chatButton}>
 				<ButtonICON

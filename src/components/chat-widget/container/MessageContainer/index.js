@@ -8,23 +8,23 @@ import Message from "../Message";
 
 export default class MessageContainer extends Component {
 	remove = () => {
-		let { onRemove, todo } = this.props;
-		onRemove(todo);
+		let { onRemove, message } = this.props;
+		onRemove(message);
 	};
 
-	render({ todo }) {
-		console.log(this.props);
+	render({ message }) {
+		console.log('mmm...',this.props);
 		return (
 			<li>
 				<div class={style.messageWrapper}>
-					<Avater avaterUrl={todo.text} avaterAlt={todo.text} />
+					<Avater avaterUrl={message.avater} avaterAlt={message.name} />
 					<div class={style.messageWrap}>
-						<Sender avaterUrl={todo.text} avaterAlt={todo.text} />
-						<Message avaterUrl={todo.text} avaterAlt={todo.text} />
+						<Sender avaterUrl={message.name} avaterAlt={message.name} />
+						<Message avaterUrl={message.text} avaterAlt={message.text} />
 					</div>
 				</div>
-				<DateTime avaterUrl={todo.text} avaterAlt={todo.text} />
-				{/* <button onClick={this.remove}>×</button> */}
+				<DateTime dateTime={message.time} />
+				<button onClick={this.remove}>×</button>
 			</li>
 		);
 	}

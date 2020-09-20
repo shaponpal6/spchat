@@ -1,6 +1,6 @@
 import { h, render, Component } from "preact";
-import { Provider } from "preact-redux";
-import store from "./store/store";
+// import { Provider } from "preact-redux";
+// import store from "./store/store";
 import AppComponent from "./components/app";
 import "./style";
 
@@ -16,15 +16,17 @@ import "./style";
 // 		</Provider>
 // 	</div>
 // );
+
+
 class App extends Component {
 	render() {
-		console.log("store", store);
-		console.log("store", store.getState());
+		// console.log("store", store);
+		// console.log("store", store.getState());
 		return (
 			<div class="chatWidgetEntryPoint">
-				<Provider store={store}>
+				{/* <Provider store={store}> */}
 					<AppComponent />
-				</Provider>
+				{/* </Provider> */}
 			</div>
 		);
 	}

@@ -5,12 +5,12 @@ import style from "./style.less";
 export default class ChatContainer extends Component {
 
 	render() {
-		const todos = this.props.store;
+		const messages = this.props.messages;
 		return (
 			<div class={style.messageContainer}>
 				<ul class={style.messages}>
-					{todos.map((todo) => (
-						<MessageContainer key={todo.id} todo={todo} onRemove={this.props.removeToDo} />
+					{messages.data.map((message) => (
+						<MessageContainer key={message.id} message={message} onRemove={this.props.removeMessage} />
 					))}
 				</ul>
 			</div>

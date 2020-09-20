@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Ready-to-go Preact + Redux starter project, powered by Preact CLI.",
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+    "start": "npm run -s dev",
+    "start2": "npm run -s serve",
     "build": "preact build",
     "serve": "preact build && preact serve",
     "dev": "preact watch",
@@ -48,13 +49,11 @@
     "@firebase/app": "^0.6.10",
     "@firebase/database": "^0.6.11",
     "@firebase/firestore": "^1.16.6",
-    "preact-redux": "^1.2.0",
-    "redux": "^3.6.0",
-    "window-or-global": "^1.0.1",
     "css-vars-ponyfill": "^2.3.2",
     "date-fns": "^2.15.0",
     "desvg": "^1.0.2",
     "emoji-mart": "^3.0.0",
+    "firebase": "^7.21.0",
     "history": "^5.0.0",
     "i18nline": "^2.0.1",
     "markdown-it": "^11.0.0",
@@ -62,8 +61,13 @@
     "mitt": "^2.1.0",
     "preact": "^10.4.6",
     "preact-i18nline": "^2.0.0",
+    "preact-redux": "^1.2.0",
     "preact-router": "^3.2.1",
     "query-string": "^6.13.1",
-    "whatwg-fetch": "^3.4.0"
+    "redux": "^3.6.0",
+    "uniqid": "^5.2.0",
+    "validator": "^13.1.17",
+    "whatwg-fetch": "^3.4.0",
+    "window-or-global": "^1.0.1"
   }
 }

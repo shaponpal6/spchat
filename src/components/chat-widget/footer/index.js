@@ -9,15 +9,15 @@ export default (props) => {
 	return (
 		<div class={style.footer}>
 			
-			<Button className="" imageSrc={ninja}  onClick={store.onBotStatus}/> 
-			<Button className="" imageSrc={ninja}  onClick={store.onAttachment}/> 
-			<Button className="" imageSrc={ninja}  onClick={store.onMenuExpend}/> 
+			<Button className="" imageSrc={ninja}  onClick={props.onBotStatus}/> 
+			<Button className="" imageSrc={ninja}  onClick={props.onAttachment}/> 
+			<Button className="" imageSrc={ninja}  onClick={props.onMenuExpend}/> 
 
 			<form onSubmit={props.onSubmit} action="javascript:">
 				<input
-					value={props.value}
+					value={props.query}
 					onInput={props.onInput}
-					placeholder={store.placeholder}
+					placeholder={props.locales.writeMessage}
 				/>
 			</form>
 		</div>

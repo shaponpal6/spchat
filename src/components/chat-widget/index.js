@@ -15,13 +15,14 @@ class ChatWidget extends Component {
 
 		return (
 			<div class={style.chatWidget}>
-				<Header store={store.header} />
-				<ChatContainer store={store.todos} removeToDo={store.removeTodo} />
+				<Header store={store.header} {...this.props}/>
+				<ChatContainer store={store.todos} removeToDo={store.removeTodo} {...this.props}/>
 				<Footer
 					store={store.footer}
 					value={store.text}
 					onSubmit={store.addTodos}
 					onInput={store.updateText}
+					{...this.props}
 				/>
 			</div>
 		);
