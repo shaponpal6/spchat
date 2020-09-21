@@ -5,7 +5,6 @@ import style from "./style.less";
 
 class ButtonICON extends Component {
 	render() {
-		console.log(this.props);
 		const store = this.props;
 		return (
 			<button

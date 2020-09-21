@@ -1,12 +1,13 @@
 import { h, Component } from "preact";
 // import uniqid from "uniqid";
 // var uniqid = require('uniqid');
-import db from '../firebase/firestore';
-import WidgetTrigger from "../core/SPChatWidgetEventsHandeller";
+import db from "../firebase/firestore";
+import { SPChatWidgetEventsHandeller } from "../core/SPChatWidgetEventsHandeller";
 import DashboardTrigger from "../core/SPChatDashboardEventsHandeller";
 import ScreenTrigger from "../core/SPChatScreenEventsHandeller";
 import IntroTrigger from "../core/SPChatIntroEventsHandeller";
 import AuthTrigger from "../core/SPChatAuthEventsHandeller";
+import { firebaseEvents } from "../app/firebaseEvents";
 // import { connect } from "preact-redux";
 // import reduce from "../store/reducers";
 // import * as actions from "../store/actions";
@@ -15,6 +16,9 @@ import ChatDashboard from "./ChatDashboard";
 import ChatIntro from "./ChatIntro";
 import ChatButton from "./ChatButton";
 import style from "./style";
+
+import firebase from "firebase/app";
+import "firebase/firestore";
 
 function isRTL(s) {
 	const rtlChars = "\u0591-\u07FF\u200F\u202B\u202E\uFB1D-\uFDFD\uFE70-\uFEFC";
@@ -25,8 +29,6 @@ function isRTL(s) {
 // @connect(reduce, actions)
 class AppComponent extends Component {
 	addTodos = () => {
-		console.log("proppp...", this.props);
-		console.log("add..ccc....", this.state);
 		this.props.addTodo(this.state.text);
 		this.setState({ text: "" });
 	};
@@ -62,6 +64,12 @@ class AppComponent extends Component {
 	};
 
 	onSubmit = (e) => {
+		// const app = new firebaseEvents();
+		// const app2 = new SPChatWidgetEventsHandeller();
+		// console.log("cl", app);
+		// console.log("cl", app.signIn);
+		// console.log("cl2", app2);
+		// console.log("cl2", app2.onSubmit);
 		const data = {
 			id: Date.now(),
 			text: this.state.query,
@@ -69,35 +77,102 @@ class AppComponent extends Component {
 			time: "12 Jun, 2019",
 			avater: "",
 			type: "c",
+			profilePicUrl: "this.getProfilePicUrl()",
+			// timestamp: '',
+			timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 		};
 
-		db.collection("messages").add(data).then(function(docRef) {
-			console.log("Document written with ID: ", docRef.id);
-		}).catch(function(error) {
-			console.error("Error adding document: ", error);
-		});
+		db.collection("messages")
+			.add(data)
+			.then(function (docRef) {
+				console.log("Document written with ID: ", docRef.id);
+			})
+			.catch(function (error) {
+				console.error("Error adding document: ", error);
+			});
 
-
-		
 		console.log(db);
-		console.log("submit...", e);
-		console.log(data);
 
 		this.setState({
 			messages: {
 				data: [...this.state.messages.data, data],
 			},
-			query: ""
+			query: "",
 		});
-		console.log(this.state);
 	};
+
+	updateItem(id, newData) {
+		var index = this.state.messages.data.findIndex((x) => x.id === id);
+		if (index === -1) {
+			this.setState({
+				messages: {
+					data: [...this.state.messages.data, newData],
+				},
+			});
+		} else {
+			var data = this.state.messages.data.filter((x) => x.id !== id);
+			this.setState({
+				messages: {
+					data: [...data, newData],
+				},
+			});
+		}
+	}
+
+	// Loads chat messages history and listens for upcoming ones.
+	loadMessages() {
+		console.log("from loadMessages");
+		// Create the query to load the last 12 messages and listen for new ones.
+		var query = db
+			.collection("messages")
+			.orderBy("timestamp", "desc")
+			.limit(12);
+
+		// Start listening to the query.
+		query.onSnapshot(function (snapshot) {
+			snapshot.docChanges().forEach(function (change) {
+				console.log("change");
+				console.log(change);
+				var message = change.doc.data();
+				console.log(message);
+				console.log(this.state.messages);
+				var data = this.state.messages.data.filter((x) => x.id !== message.id);
+
+				if (change.type === "removed") {
+					//deleteMessage(change.doc.id);
+					this.setState({
+						messages: {
+							data: [...data],
+						},
+					});
+				} else {
+					
+					message.sent = 1;
+					message.seen = '12 jun 2010';
+					
+					this.setState({
+						messages: {
+							data: [...data, message],
+						},
+					});
+					// displayMessage(
+					// 	change.doc.id,
+					// 	message.timestamp,
+					// 	message.name,
+					// 	message.text,
+					// 	message.profilePicUrl,
+					// 	message.imageUrl
+					// );
+				}
+			});
+		});
+	}
 
 	// Button Click
 	onChatButtonClick = () => {
 		console.log("clicked Button");
 		// this.props.addTodo(this.state.text);
 		// this.setState({ text: "" });
-		console.log();
 	};
 	// Button Hover
 	onChatButtonHover = () => {
@@ -335,12 +410,13 @@ class AppComponent extends Component {
 	}
 
 	componentDidUpdate() {
+		this.loadMessages();
 		document.dir = isRTL("Yes") ? "rtl" : "ltr";
 	}
 
 	render() {
-		console.log("props...", this.props);
-		console.log("state..", this.state);
+		// console.log("props...", this.props);
+		// console.log("state..", this.state);
 
 		const onEventsHandlerProps = {
 			onSignIn: AuthTrigger.signIn,

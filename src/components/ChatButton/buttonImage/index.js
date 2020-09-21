@@ -10,7 +10,6 @@ import style from "./style.less";
 
 class ComponentsManager extends Component {
 	render() {
-		console.log(this.props)
 		const store = this.props.store;
 		return (
 			<div class={style.container}>

@@ -1,8 +1,16 @@
 import SPChatBaseController from "./SPChatBaseController";
-export default class SPChatWidgetEventsHandeller extends SPChatBaseController {
+export class SPChatWidgetEventsHandeller extends SPChatBaseController {
+	constructor(){
+		super();
+		console.log('..core super.. SPChatWidgetEventsHandeller');
+		this.onSubmit.bind(this);
+	}
+	onSubmit = (e) => {
+		console.log('..core.. SPChatWidgetEventsHandeller', e);
+	}
+
 	onMenuToggle() {}
 	removeTodo() {}
-	addTodos() {}
 	updateText() {}
 	onBotStatus() {}
 	onAttachment() {}

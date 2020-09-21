@@ -8,7 +8,6 @@ import style from "./style.less";
 export default class Header extends Component {
 	render() {
 		const store = this.props.store;
-		console.log("1.....props..", this.props);
 		return (
 			<header class={style.header}>
 				<OperatorsList

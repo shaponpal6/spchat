@@ -13,7 +13,6 @@ export default class MessageContainer extends Component {
 	};
 
 	render({ message }) {
-		console.log('mmm...',this.props);
 		return (
 			<li>
 				<div class={style.messageWrapper}>

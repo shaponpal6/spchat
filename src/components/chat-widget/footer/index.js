@@ -4,8 +4,6 @@ import Button from "../../CommonContainer/ButtonComponent";
 import ninja from "../../../images/ninja.png";
 
 export default (props) => {
-	const store = props.store;
-	console.log('props footer', props);
 	return (
 		<div class={style.footer}>
 			
